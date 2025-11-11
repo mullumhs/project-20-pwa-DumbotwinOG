@@ -1,6 +1,18 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import datetime
 db = SQLAlchemy()
+
+class Cards(db.Model):
+    card_name = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    card_rarity = db.Column(db.Text)
+    card_rating = db.Column(db.Rating, nullable=False)
+    elixir_cost = db.Column(db.Integer, nullable=False)
+    card_type = db.Column(db.Boolean, default=False)
+    attack_type = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Task {self.title}>'
 
 # Define your database model here
 # Example: class Item(db.Model):
