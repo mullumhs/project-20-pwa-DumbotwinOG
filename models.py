@@ -4,7 +4,6 @@ db = SQLAlchemy()
 
 class Cards(db.Model):
     card_name = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
     card_rarity = db.Column(db.Text)
     card_rating = db.Column(db.Rating, nullable=False)
     elixir_cost = db.Column(db.Integer, nullable=False)

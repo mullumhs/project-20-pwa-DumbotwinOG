@@ -17,7 +17,7 @@ def init_routes(app):
 
 
     @app.route('/add', methods=['POST'])
-    def create_item():
+    def create_cards():
         # This route should handle adding a new item to the database.
         return render_template('index.html', message='Item added successfully')
 
