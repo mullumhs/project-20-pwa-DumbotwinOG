@@ -10,8 +10,3 @@ class Cards(db.Model):
     card_type = db.Column(db.Boolean, default=False)
     attack_type = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __repr__(self):
-        return f'<Task {self.title}>'
-
-# Define your database model here
-# Example: class Item(db.Model):

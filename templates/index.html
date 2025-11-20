@@ -48,7 +48,7 @@
 
     <form action="/add" method="POST">
 
-        <input type="text" name="card_name" placeholder="card_name" required>
+        <input type="text" name="card_name" placeholder="Card Name" required>
         <input type="number" name="elixir_cost" placeholder="Elixir Cost" min="1" max="10" required>
         <input type="text" name="card_type" placeholder="Card Type" required>
         <input type="text" name="rarity" placeholder="Rarity" required>
@@ -66,9 +66,12 @@
 
     <form action="/update" method="POST">
 
-        <input type="number" name="id" placeholder="Item ID" required>
-
-        <input type="text" name="name" placeholder="New Name" required>
+        <input type="text" name="card_name" placeholder="Card Name" required>
+        <input type="text" name="attack_type" placeholder="Attack Type" required>
+        <input type="text" name="card_type" placeholder="Card Type" required>
+        <input type="number" name="elixir_cost" placeholder="Elixir Cost" required>
+        <input type="number" name="rarity" placeholder="Rarity" required>
+        <input type="number" name="card_rating" placeholder="Card Rating" required>
 
         <button type="submit">Update</button>
 
