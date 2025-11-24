@@ -16,30 +16,59 @@ def init_routes(app):
 
 
 
+
     @app.route('/add', methods=['POST'])
     def add_cards():
         if request.method == 'POST':
-            new_cards = Cards(
-                name=request.form['card_name'],
+            new_card = Cards(
+                card_name=request.form['card_name'],   # <-- fixed
                 card_type=request.form['card_type'],
                 attack_type=request.form['attack_type'],
                 elixir=int(request.form['elixir_cost']),
                 rating=float(request.form['card_rating']),
-                rarity=float(request.form['rarity'])        
-
+                rarity=request.form['rarity']          # <-- string if text input
             )
-        db.session.add(new_cards)
-        db.session.commit()
+            db.session.add(new_card)
+            db.session.commit()
 
-        return render_template('index.html', message='Item added successfully')
+            return render_template('index.html', message='Card added successfully')
+
 
 
 
     @app.route('/update', methods=['POST'])
     def update_item():
-        
-        # This route should handle updating an existing item identified by the given ID.
-        return render_template('index.html', message=f'Item updated successfully')
+        if request.method == 'POST':
+            # Find the card by card_name (unique field)
+            card = Cards.query.filter_by(card_name=request.form['card_name']).first()
+
+            if card:
+                # Update existing card
+                card.card_type = request.form['card_type']
+                card.attack_type = request.form['attack_type']
+                card.elixir = int(request.form['elixir_cost'])
+                card.rating = float(request.form['card_rating'])
+                card.rarity = float(request.form['rarity'])
+
+                db.session.commit()
+                message = f'Card "{card.card_name}" updated successfully'
+            else:
+                # If not found, create a new one
+                new_card = Cards(
+                    card_name=request.form['card_name'],   # <-- fixed here
+                    card_type=request.form['card_type'],
+                    attack_type=request.form['attack_type'],
+                    elixir=int(request.form['elixir_cost']),
+                    rating=float(request.form['card_rating']),
+                    rarity=float(request.form['rarity'])
+                )
+                db.session.add(new_card)
+                db.session.commit()
+                message = f'New card "{new_card.card_name}" created successfully'
+
+            return render_template('index.html', message=message)
+
+
 
 
 
