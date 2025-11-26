@@ -12,7 +12,8 @@ def init_routes(app):
     @app.route('/', methods=['GET'])
     def get_items():
         # This route should retrieve all items from the database and display them on the page.
-        return render_template('index.html', message='Displaying all items')
+        cards = Cards.query.all()
+        return render_template('index.html', message='Displaying all items', cards=cards)
 
 
 
@@ -24,8 +25,8 @@ def init_routes(app):
                 card_name=request.form['card_name'],   # <-- fixed
                 card_type=request.form['card_type'],
                 attack_type=request.form['attack_type'],
-                elixir=int(request.form['elixir_cost']),
-                rating=float(request.form['card_rating']),
+                elixir_cost=int(request.form['elixir_cost']),
+                card_rating=float(request.form['card_rating']),
                 rarity=request.form['rarity']          # <-- string if text input
             )
             db.session.add(new_card)

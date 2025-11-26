@@ -33,10 +33,9 @@
     <!-- This will later display items from the database -->
 
     <ul>
-
-        <li>Sample Item 1</li>
-
-        <li>Sample Item 2</li>
+        {% for card in cards %} 
+        <li>{{card['card_name']}}</li>
+        {% endfor %}
 
     </ul>
 
