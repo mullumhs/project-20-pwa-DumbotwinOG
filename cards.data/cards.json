@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "card_name": "Knight",
+    "elixir_cost": 3,
+    "card_type": "Troop",
+    "rarity": "Common",
+    "attack_type": "Melee",
+    "card_rating": "Balanced",
+    "description": "A tough melee fighter with moderate damage and good hitpoints.",
+    "image_url": "https://royaleapi.com/static/img/cards/knight.png"
+  },
+  {
+    "id": 2,
+    "card_name": "Archers",
+    "elixir_cost": 3,
+    "card_type": "Troop",
+    "rarity": "Common",
+    "attack_type": "Ranged",
+    "card_rating": "Reliable",
+    "description": "Two ranged attackers with decent damage and low hitpoints.",
+    "image_url": "https://royaleapi.com/static/img/cards/archers.png"
+  },
+  {
+    "id": 3,
+    "card_name": "Fireball",
+    "elixir_cost": 4,
+    "card_type": "Spell",
+    "rarity": "Rare",
+    "attack_type": "Area Damage",
+    "card_rating": "Strong",
+    "description": "Deals high area damage to troops and buildings.",
+    "image_url": "https://royaleapi.com/static/img/cards/fireball.png"
+  },
+  {
+    "id": 4,
+    "card_name": "Baby Dragon",
+    "elixir_cost": 4,
+    "card_type": "Troop",
+    "rarity": "Epic",
+    "attack_type": "Ranged (Splash)",
+    "card_rating": "Versatile",
+    "description": "Flying troop that spits fireballs dealing splash damage.",
+    "image_url": "https://royaleapi.com/static/img/cards/baby-dragon.png"
+  },
+  {
+    "id": 5,
+    "card_name": "Mega Minion",
+    "elixir_cost": 3,
+    "card_type": "Troop",
+    "rarity": "Rare",
+    "attack_type": "Melee (Flying)",
+    "card_rating": "Efficient",
+    "description": "Flying minion with strong single-target damage.",
+    "image_url": "https://royaleapi.com/static/img/cards/mega-minion.png"
+  },
+  {
+    "id": 6,
+    "card_name": "Princess",
+    "elixir_cost": 3,
+    "card_type": "Troop",
+    "rarity": "Legendary",
+    "attack_type": "Ranged (Long)",
+    "card_rating": "Unique",
+    "description": "Shoots flaming arrows across the arena with extreme range.",
+    "image_url": "https://royaleapi.com/static/img/cards/princess.png"
+  }
+]
