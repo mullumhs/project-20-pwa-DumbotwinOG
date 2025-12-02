@@ -47,7 +47,7 @@
     {% for card in cards %}
       <div class="col-md-3 mb-4">
         <div class="card clash-card h-100">
-          <img src="https://royaleapi.com/static/img/cards" class="card-img-top" alt="{{ card['card_name'] }}">
+          <img src="https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/{{ card['card_name'] | lower | replace(' ', '-') }}.png"  class="card-img-top" alt="{{ card['card_name'] }}">
           <div class="card-body text-center">
             <h5 class="card-title">{{ card['card_name'] }}</h5>
             <p class="card-text">Elixir: {{ card['elixir_cost'] }}</p>
@@ -73,16 +73,23 @@
     <button type="submit">Create</button>
   </form>
 
-  <h2>Update Item</h2>
-  <form action="/update" method="POST" class="mb-4">
-    <input type="text" name="card_name" placeholder="Card Name" required>
-    <input type="text" name="attack_type" placeholder="Attack Type" required>
-    <input type="text" name="card_type" placeholder="Card Type" required>
-    <input type="number" name="elixir_cost" placeholder="Elixir Cost" required>
-    <input type="text" name="rarity" placeholder="Rarity" required>
-    <input type="number" name="card_rating" placeholder="Card Rating" required>
-    <button type="submit">Update</button>
-  </form>
+ <h2>Update Item</h2>
+<form action="/update" method="POST" class="mb-4">
+  <select id="cardSelect" name="card_name" class="form-select mb-2" required>
+    <option value="">Select a card...</option>
+    {% for card in cards %}
+      <option value="{{ card['card_name'] }}">{{ card['card_name'] }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="text" id="attack_type" name="attack_type" placeholder="Attack Type" required>
+  <input type="text" id="card_type" name="card_type" placeholder="Card Type" required>
+  <input type="number" id="elixir_cost" name="elixir_cost" placeholder="Elixir Cost" required>
+  <input type="text" id="rarity" name="rarity" placeholder="Rarity" required>
+  <input type="number" id="card_rating" name="card_rating" placeholder="Card Rating" required>
+  <button type="submit">Update</button>
+</form>
+
 
   <h2>Delete Item</h2>
   <form action="/delete" method="POST">
