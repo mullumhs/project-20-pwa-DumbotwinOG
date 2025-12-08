@@ -54,16 +54,19 @@ def init_routes(app):
 
         return redirect(url_for('get_items'))
 
-    @app.route('/delete', methods=['POST'])
-    def delete_item():
-        card_id = request.form['id']
-        card = Cards.query.get(card_id)
+    @app.route('/')
+    def index():
+        cards = Cards.query.all()
+        return render_template('index.html', cards=cards)
 
+    @app.route('/delete', methods=['POST'])
+    def delete_card():
+        card_id = request.form['card_id']
+        card = Cards.query.get(int(card_id))
         if card:
             db.session.delete(card)
             db.session.commit()
-            flash(f'Card "{card.card_name}" deleted successfully!', 'danger')
-        else:
-            flash('Card not found.', 'warning')
+        return redirect('/')
 
-        return redirect(url_for('get_items'))
+
+    

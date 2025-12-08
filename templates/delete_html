@@ -1,0 +1,19 @@
+<!-- templates/delete.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delete Card</title>
+</head>
+<body>
+  <h2>Delete Card</h2>
+  <form action="/delete" method="POST">
+    <label for="card_id">Choose Card</label>
+    <select name="card_id" required>
+      {% for card in cards %}
+        <option value="{{ card.id }}">{{ card.card_name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Delete</button>
+  </form>
+</body>
+</html>

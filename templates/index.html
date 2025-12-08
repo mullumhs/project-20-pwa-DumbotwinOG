@@ -62,40 +62,113 @@
   </div>
 
   <!-- Forms Section -->
-  <h2 class="mt-5">Create Item</h2>
-  <form action="/add" method="POST" class="mb-4">
-    <input type="text" name="card_name" placeholder="Card Name" required>
-    <input type="number" name="elixir_cost" placeholder="Elixir Cost" min="1" max="10" required>
-    <input type="text" name="card_type" placeholder="Card Type" required>
-    <input type="text" name="rarity" placeholder="Rarity" required>
-    <input type="text" name="attack_type" placeholder="Attack Type" required>
-    <input type="text" name="card_rating" placeholder="Card Rating" required>
-    <button type="submit">Create</button>
+  <!-- Create Card -->
+  <h2 class="mt-5 text-primary">
+  <i class="bi bi-plus-circle"></i> Create Card
+  </h2>
+  <form action="/add" method="POST" class="card p-4 shadow-sm mb-4">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <input type="text" name="card_name" class="form-control" placeholder="Card Name" required>
+      </div>
+      <div class="col-md-6">
+        <input type="number" name="elixir_cost" class="form-control" placeholder="Elixir Cost" min="1" max="10" required>
+      </div>
+      <div class="col-md-6">
+        <input type="text" name="card_type" class="form-control" placeholder="Card Type" required>
+      </div>
+      <div class="col-md-6">
+        <input type="text" name="rarity" class="form-control" placeholder="Rarity" required>
+      </div>
+      <div class="col-md-6">
+        <input type="text" name="attack_type" class="form-control" placeholder="Attack Type" required>
+      </div>
+      <div class="col-md-6">
+        <!-- Changed to number input -->
+        <input type="number" step="0.1" name="card_rating" class="form-control" 
+              placeholder="Card Rating" min="0" max="100" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success btn-lg mt-3 shadow-sm action-btn">
+      <i class="bi bi-check-circle"></i> Create
+    </button>
   </form>
 
- <h2>Update Item</h2>
-<form action="/update" method="POST" class="mb-4">
-  <select id="cardSelect" name="card_name" class="form-select mb-2" required>
-    <option value="">Select a card...</option>
-    {% for card in cards %}
-      <option value="{{ card['card_name'] }}">{{ card['card_name'] }}</option>
-    {% endfor %}
-  </select>
-
-  <input type="text" id="attack_type" name="attack_type" placeholder="Attack Type" required>
-  <input type="text" id="card_type" name="card_type" placeholder="Card Type" required>
-  <input type="number" id="elixir_cost" name="elixir_cost" placeholder="Elixir Cost" required>
-  <input type="text" id="rarity" name="rarity" placeholder="Rarity" required>
-  <input type="number" id="card_rating" name="card_rating" placeholder="Card Rating" required>
-  <button type="submit">Update</button>
-</form>
 
 
-  <h2>Delete Item</h2>
-  <form action="/delete" method="POST">
-    <input type="number" name="id" placeholder="Item ID" required>
-    <button type="submit">Delete</button>
+<!-- Update Card -->
+  <h2 class="mt-5 text-warning">
+    <i class="bi bi-pencil-square"></i> Update Card
+  </h2>
+  <form action="/update" method="POST" class="card p-4 shadow-sm mb-4">
+    <div class="mb-3">
+      <select id="cardSelect" name="card_name" class="form-select form-select-lg shadow-sm" required>
+        <option value="">Select a card...</option>
+        {% for card in cards %}
+          <option value="{{ card['card_name'] }}">{{ card['card_name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <input type="text" id="attack_type" name="attack_type" class="form-control" placeholder="Attack Type" required>
+      </div>
+      <div class="col-md-6">
+        <input type="text" id="card_type" name="card_type" class="form-control" placeholder="Card Type" required>
+      </div>
+      <div class="col-md-6">
+        <input type="number" id="elixir_cost" name="elixir_cost" class="form-control" placeholder="Elixir Cost" required>
+      </div>
+      <div class="col-md-6">
+        <input type="text" id="rarity" name="rarity" class="form-control" placeholder="Rarity" required>
+      </div>
+      <div class="col-md-6">
+        <input type="number" id="card_rating" name="card_rating" class="form-control" placeholder="Card Rating" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-warning btn-lg mt-3 shadow-sm action-btn">
+      <i class="bi bi-arrow-repeat"></i> Update
+    </button>
   </form>
+
+
+  <!-- Delete Card -->
+  <h2 class="mt-5 text-danger">
+    <i class="bi bi-trash-fill"></i> Delete Card
+  </h2>
+  <form action="/delete" method="POST" class="card p-4 shadow-sm mb-4 d-flex flex-column flex-md-row align-items-md-end gap-3">
+    <div class="flex-grow-1">
+      <label for="card_id" class="form-label fw-bold">Choose Card</label>
+      <select name="card_id" id="card_id" class="form-select form-select-lg shadow-sm" required>
+        {% for card in cards %}
+          <option value="{{ card.id }}">{{ card.card_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-danger btn-lg shadow-sm action-btn">
+        <i class="bi bi-x-circle"></i> Delete
+      </button>
+    </div>
+  </form>
+
+
+  <!-- Shared Custom CSS -->
+  <style>
+    .action-btn {
+      transition: all 0.3s ease;
+    }
+    .action-btn:hover {
+      transform: scale(1.05);
+      filter: brightness(90%);
+    }
+    .card {
+      border-radius: 12px;
+    }
+  </style>
+
+  
+
 
 </body>
 </html>
