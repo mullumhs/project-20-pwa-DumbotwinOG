@@ -14,7 +14,54 @@
       background: #1a1a1a;
       color: #fff;
       font-family: 'Trebuchet MS', sans-serif;
+      padding-top: 70px; /* offset for fixed navbar */
     }
+
+    /* Clash Royale Navbar */
+    .navbar {
+      background: linear-gradient(90deg, #004aad, #0077ff);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #FFD700 !important;
+      text-shadow: 2px 2px #000;
+    }
+    .nav-link {
+      color: #fff !important;
+      font-weight: bold;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 3px;
+      bottom: -5px;
+      left: 0;
+      background-color: #FFD700;
+      transition: width 0.3s;
+    }
+    .nav-link:hover {
+      color: #FFD700 !important;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .btn-play {
+      background: #FFD700;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      text-shadow: 1px 1px #fff;
+      transition: transform 0.2s;
+    }
+    .btn-play:hover {
+      transform: scale(1.1);
+      background: #ffcc33;
+    }
+
+    /* Clash Cards */
     .clash-card {
       border: 2px solid #FFD700;
       background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
@@ -29,132 +76,7 @@
     .badge.rarity-rare { background: blue; }
     .badge.rarity-epic { background: purple; }
     .badge.rarity-legendary { background: gold; color: black; }
-  </style>
-</head>
-<body class="container py-4">
 
-  <h1 class="text-center mb-4">🧩 Clash Royale Cards</h1>
-
-  <!-- Display any message passed from the backend -->
-  {% if message %}
-    <div class="alert alert-info text-center">
-      {{ message }}
-    </div>
-  {% endif %}
-
-  <!-- Card Grid -->
-  <div class="row">
-    {% for card in cards %}
-      <div class="col-md-3 mb-4">
-        <div class="card clash-card h-100">
-          <img src="https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/{{ card['card_name'] | lower | replace(' ', '-') }}.png"  class="card-img-top" alt="{{ card['card_name'] }}">
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ card['card_name'] }}</h5>
-            <p class="card-text">Elixir: {{ card['elixir_cost'] }}</p>
-            <p class="card-text">Type: {{ card['card_type'] }}</p>
-            <p class="card-text">Attack: {{ card['attack_type'] }}</p>
-            <p class="card-text">Rating: {{ card['card_rating'] }}</p>
-            <span class="badge rarity-{{ card['rarity'] | lower }}">{{ card['rarity'] }}</span>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-
-  <!-- Forms Section -->
-  <!-- Create Card -->
-  <h2 class="mt-5 text-primary">
-  <i class="bi bi-plus-circle"></i> Create Card
-  </h2>
-  <form action="/add" method="POST" class="card p-4 shadow-sm mb-4">
-    <div class="row g-3">
-      <div class="col-md-6">
-        <input type="text" name="card_name" class="form-control" placeholder="Card Name" required>
-      </div>
-      <div class="col-md-6">
-        <input type="number" name="elixir_cost" class="form-control" placeholder="Elixir Cost" min="1" max="10" required>
-      </div>
-      <div class="col-md-6">
-        <input type="text" name="card_type" class="form-control" placeholder="Card Type" required>
-      </div>
-      <div class="col-md-6">
-        <input type="text" name="rarity" class="form-control" placeholder="Rarity" required>
-      </div>
-      <div class="col-md-6">
-        <input type="text" name="attack_type" class="form-control" placeholder="Attack Type" required>
-      </div>
-      <div class="col-md-6">
-        <!-- Changed to number input -->
-        <input type="number" step="0.1" name="card_rating" class="form-control" 
-              placeholder="Card Rating" min="0" max="100" required>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-success btn-lg mt-3 shadow-sm action-btn">
-      <i class="bi bi-check-circle"></i> Create
-    </button>
-  </form>
-
-
-
-<!-- Update Card -->
-  <h2 class="mt-5 text-warning">
-    <i class="bi bi-pencil-square"></i> Update Card
-  </h2>
-  <form action="/update" method="POST" class="card p-4 shadow-sm mb-4">
-    <div class="mb-3">
-      <select id="cardSelect" name="card_name" class="form-select form-select-lg shadow-sm" required>
-        <option value="">Select a card...</option>
-        {% for card in cards %}
-          <option value="{{ card['card_name'] }}">{{ card['card_name'] }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="row g-3">
-      <div class="col-md-6">
-        <input type="text" id="attack_type" name="attack_type" class="form-control" placeholder="Attack Type" required>
-      </div>
-      <div class="col-md-6">
-        <input type="text" id="card_type" name="card_type" class="form-control" placeholder="Card Type" required>
-      </div>
-      <div class="col-md-6">
-        <input type="number" id="elixir_cost" name="elixir_cost" class="form-control" placeholder="Elixir Cost" required>
-      </div>
-      <div class="col-md-6">
-        <input type="text" id="rarity" name="rarity" class="form-control" placeholder="Rarity" required>
-      </div>
-      <div class="col-md-6">
-        <input type="number" id="card_rating" name="card_rating" class="form-control" placeholder="Card Rating" required>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-warning btn-lg mt-3 shadow-sm action-btn">
-      <i class="bi bi-arrow-repeat"></i> Update
-    </button>
-  </form>
-
-
-  <!-- Delete Card -->
-  <h2 class="mt-5 text-danger">
-    <i class="bi bi-trash-fill"></i> Delete Card
-  </h2>
-  <form action="/delete" method="POST" class="card p-4 shadow-sm mb-4 d-flex flex-column flex-md-row align-items-md-end gap-3">
-    <div class="flex-grow-1">
-      <label for="card_id" class="form-label fw-bold">Choose Card</label>
-      <select name="card_id" id="card_id" class="form-select form-select-lg shadow-sm" required>
-        {% for card in cards %}
-          <option value="{{ card.id }}">{{ card.card_name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div>
-      <button type="submit" class="btn btn-danger btn-lg shadow-sm action-btn">
-        <i class="bi bi-x-circle"></i> Delete
-      </button>
-    </div>
-  </form>
-
-
-  <!-- Shared Custom CSS -->
-  <style>
     .action-btn {
       transition: all 0.3s ease;
     }
@@ -166,8 +88,46 @@
       border-radius: 12px;
     }
   </style>
+</head>
+<body>
+
+
+
+  <!-- index.html -->
+  {% extends "base.html" %}
+
+  {% block title %}👑⚔️ Clash Royale Cards{% endblock %}
+
+  {% block content %}
+    <h1 class="text-center mb-4">👑⚔️ Clash Royale Cards</h1>
+
+    {% if message %}
+      <div class="alert alert-info text-center">{{ message }}</div>
+    {% endif %}
+
+    <div class="row">
+      {% for card in cards %}
+        <div class="col-md-3 mb-4">
+          <div class="card clash-card h-100">
+            <img src="https://cdns3.royaleapi.com/.../{{ card['card_name']|lower|replace(' ','-') }}.png" class="card-img-top" alt="{{ card['card_name'] }}">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ card['card_name'] }}</h5>
+              <p>Elixir: {{ card['elixir_cost'] }}</p>
+              <p>Type: {{ card['card_type'] }}</p>
+              <p>Attack: {{ card['attack_type'] }}</p>
+              <p>Rating: {{ card['card_rating'] }}</p>
+              <span class="badge rarity-{{ card['rarity']|lower }}">{{ card['rarity'] }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endblock %}
 
   
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
 
 
 </body>

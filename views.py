@@ -69,4 +69,20 @@ def init_routes(app):
         return redirect('/')
 
 
+
+
+    @app.route('/search', methods=['GET'])
+    def search():
+        query = request.args.get('q', '').lower()
+        results = []
+        if query:
+            # Use SQLAlchemy filter
+            results = Cards.query.filter(Cards.card_name.ilike(f"%{query}%")).all()
+        return render_template('search.html', results=results)
+
+
+    @app.route('/form')
+    def form():
+        cards = Cards.query.all()   # you need cards for the update/delete dropdowns
+        return render_template('form.html', cards=cards)
     
