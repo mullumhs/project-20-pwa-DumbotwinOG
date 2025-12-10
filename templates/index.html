@@ -9,6 +9,37 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
+
+
+  <style>
+    /* Existing styles ... */
+
+    /* Ensure card text is readable on dark backgrounds */
+    .clash-card .card-body,
+    .clash-card .card-title,
+    .clash-card .card-body p,
+    .clash-card .card-body span,
+    .clash-card .card-body small {
+      color: #fff !important;
+    }
+
+    /* Optional: subtle glow for readability */
+    .clash-card .card-title {
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+    .clash-card .card-body p {
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+
+    /* Keep badges readable on gold/blue/purple backgrounds */
+    .badge.rarity-common { background: gray; color: #fff; }
+    .badge.rarity-rare { background: #1e90ff; color: #fff; }
+    .badge.rarity-epic { background: #7d3cff; color: #fff; }
+    .badge.rarity-legendary { background: #FFD700; color: #000; }
+  </style>
+
+
+
   <style>
     body {
       background: #1a1a1a;
@@ -91,8 +122,6 @@
 </head>
 <body>
 
-
-
   <!-- index.html -->
   {% extends "base.html" %}
 
@@ -106,29 +135,40 @@
     {% endif %}
 
     <div class="row">
-      {% for card in cards %}
-        <div class="col-md-3 mb-4">
-          <div class="card clash-card h-100">
-            <img src="https://cdns3.royaleapi.com/.../{{ card['card_name']|lower|replace(' ','-') }}.png" class="card-img-top" alt="{{ card['card_name'] }}">
-            <div class="card-body text-center">
-              <h5 class="card-title">{{ card['card_name'] }}</h5>
-              <p>Elixir: {{ card['elixir_cost'] }}</p>
-              <p>Type: {{ card['card_type'] }}</p>
-              <p>Attack: {{ card['attack_type'] }}</p>
-              <p>Rating: {{ card['card_rating'] }}</p>
-              <span class="badge rarity-{{ card['rarity']|lower }}">{{ card['rarity'] }}</span>
+  {% for card in cards %}
+    {% set slug = card['card_name']
+      | lower
+      | replace(' ', '-')
+      | replace("'", '')
+      | replace('.', '')
+      | replace('&', 'and')
+    %}
+    <div class="col-md-3 mb-4">
+          <!-- Wrap the whole card in a link -->
+          <a href="{{ url_for('card_info', card_slug=slug) }}" class="text-decoration-none">
+            <div class="card clash-card h-100">
+              <img
+                src="https://royaleapi.github.io/cr-api-assets/cards/{{ slug }}.png"
+                class="card-img-top"
+                alt="{{ card['card_name'] }}"
+                onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/placeholder-card.png') }}';"
+              >
+              <div class="card-body text-center text-light">
+                <h5 class="card-title">{{ card['card_name'] }}</h5>
+                <p>Elixir: {{ card['elixir_cost'] }}</p>
+                <p>Type: {{ card['card_type'] }}</p>
+                <p>Attack: {{ card['attack_type'] }}</p>
+                <p>Rating: {{ card['card_rating'] }}</p>
+                <span class="badge rarity-{{ card['rarity']|lower }}">{{ card['rarity'] }}</span>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       {% endfor %}
     </div>
   {% endblock %}
 
-  
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-
 
 </body>
 </html>

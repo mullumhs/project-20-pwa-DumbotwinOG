@@ -1,4 +1,5 @@
-from flask import render_template, request, redirect, url_for, flash
+
+from flask import render_template, request, redirect, url_for, flash, abort
 from models import db, Cards  # your SQLAlchemy model
 
 def init_routes(app):
@@ -86,3 +87,16 @@ def init_routes(app):
         cards = Cards.query.all()   # you need cards for the update/delete dropdowns
         return render_template('form.html', cards=cards)
     
+
+    @app.route('/card/<card_slug>')
+    def card_info(card_slug):
+       # find card by id
+        card = next((c for c in cards.json if c["id"] == id), None)
+        if card is None:
+            abort(404)
+        return render_template("card_info.html", card=card)
+
+    @app.route('/cards')
+    def cards():
+        all_cards = Cards.query.all()
+        return render_template("index.html", cards=all_cards)
