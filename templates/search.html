@@ -47,15 +47,36 @@
     .clash-card {
       border: 2px solid #FFD700;
       background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
-      color: #fff;
+      color: #fff; /* default text color inside card */
       transition: transform 0.2s ease-in-out, box-shadow 0.2s;
       border-radius: 12px;
       animation: fadeIn 0.8s ease;
     }
+
     .clash-card:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px #FFD700;
     }
+
+    /* Ensure card body text is readable */
+    .clash-card .card-body {
+      color: #f8f9fa; /* light gray/white text */
+    }
+
+    .clash-card .card-title {
+      color: #FFD700; /* gold for titles */
+      font-weight: bold;
+    }
+
+    .clash-card p {
+      color: #e0e0e0; /* softer light gray for details */
+    }
+
+    .clash-card .badge {
+      color: #000; /* keep badge text dark */
+      background-color: #FFD700; /* gold badge background */
+    }
+
 
     /* Fade-in animation */
     @keyframes fadeIn {
@@ -66,7 +87,6 @@
 </head>
 <body>
 
- 
     {% extends "base.html" %}
 
     {% block title %}🔍 Search Clash Royale Cards{% endblock %}
@@ -87,15 +107,20 @@
             {% for card in results %}
             <div class="col-md-3 mb-4">
                 <div class="card clash-card h-100">
-                <img src="https://cdns3.royaleapi.com/.../{{ card['card_name']|lower|replace(' ','-') }}.png" class="card-img-top" alt="{{ card['card_name'] }}">
-                <div class="card-body text-center">
-                    <h5 class="card-title">{{ card['card_name'] }}</h5>
-                    <p>Elixir: {{ card['elixir_cost'] }}</p>
-                    <p>Type: {{ card['card_type'] }}</p>
-                    <p>Attack: {{ card['attack_type'] }}</p>
-                    <p>Rating: {{ card['card_rating'] }}</p>
-                    <span class="badge bg-info">{{ card['rarity'] }}</span>
-                </div>
+                  <img 
+                    src="https://cdn.royaleapi.com/static/img/cards/{{ card['card_name']|lower|replace(' ','-') }}.png" 
+                    class="card-img-top" 
+                    alt="{{ card['card_name'] }}"
+                    onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/placeholder-card.png') }}';"
+                  >
+                  <div class="card-body text-center">
+                      <h5 class="card-title">{{ card['card_name'] }}</h5>
+                      <p>Elixir: {{ card['elixir_cost'] }}</p>
+                      <p>Type: {{ card['card_type'] }}</p>
+                      <p>Attack: {{ card['attack_type'] }}</p>
+                      <p>Rating: {{ card['card_rating'] }}</p>
+                      <span class="badge bg-info">{{ card['rarity'] }}</span>
+                  </div>
                 </div>
             </div>
             {% endfor %}
@@ -105,7 +130,6 @@
         {% endif %}
     </div>
     {% endblock %}
-
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
